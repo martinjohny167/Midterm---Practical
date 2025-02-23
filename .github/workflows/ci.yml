@@ -60,4 +60,4 @@ jobs:
           ${{ secrets.DOCKERHUB_USERNAME }}/calculator-webapp:${{ github.sha }} # Tagging the image with the commit SHA
 
     - name: Logout from Docker Hub
-      uses: docker/logout-action@v2  # Log out from Docker Hub to avoid leaking credentials
+      run: docker logout  # Log out from Docker Hub to avoid leaking credentials
