@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "main" ]        # Trigger on push to main branch
   pull_request:
-    branches: [ "main" ]        # Trigger on pull request to main branch
+    branches: [ "main" ]        # Trigger on pull request to main branch 
 
 jobs:
   build-test:
-    runs-on: ubuntu-latest      # Runs on the latest Ubuntu environment
+    runs-on: ubuntu-latest      # Runs on the latest Ubuntu environment 
 
     steps:
     - name: Checkout code
@@ -19,8 +19,19 @@ jobs:
       with:
         node-version: 18          # Sets Node.js version to 18
 
+    - name: Cache Node modules
+      uses: actions/cache@v3    # Caches node_modules to speed up build times
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
     - name: Install dependencies
       run: npm install           # Installs project dependencies via npm
+
+    - name: Give execute permission to Jest binary
+      run: chmod +x node_modules/.bin/jest
 
     - name: Run tests
       run: npm test              # Runs tests using Jest
@@ -44,4 +55,7 @@ jobs:
       with:
         context: .                           # Use the current directory as the context
         push: true                           # Push the image to Docker Hub
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/calculator-webapp:latest  # Tagging the image with the username and latest tag
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/calculator-webapp:latest,${{ secrets.DOCKERHUB_USERNAME }}/calculator-webapp:${{ github.sha }}  # Tagging the image with latest and commit SHA
+
+    - name: Logout from Docker Hub
+      run: docker logout  # Log out from Docker Hub to avoid leaking credentials
