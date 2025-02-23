@@ -129,6 +129,6 @@ This will make the application available at `http://localhost:3000`.
 👉 **Jenkins** provides an additional automation pipeline for flexibility.  
 👉 **Docker Hub** stores the containerized app for deployment.  
 
-🎯 **Project Link:** [GitHub Repository](https://github.com/martinjohny/calculator-webapp)  
+🎯 **Project Link:** [GitHub Repository](https://https://github.com/martinjohny167/Midterm---Practical)  
 🐳 **Docker Image:** [Docker Hub](https://hub.docker.com/r/martinjohny/calculator-webapp)  
 
