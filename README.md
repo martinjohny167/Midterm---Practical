@@ -1,94 +1,77 @@
-# 📦 CI/CD Pipeline for Calculator WebApp 🔥
+# CI/CD Pipeline for Calculator WebApp 🔥  
 
-This repository contains a **Calculator WebApp** project with an integrated **CI/CD pipeline** using **GitHub Actions** for automating the process of building, testing, and deploying the Dockerized application. 🎯
+This repository contains a **Calculator WebApp** project with an integrated **CI/CD pipeline** using **GitHub Actions** and **Jenkins** to automate building, testing, and deploying the Dockerized application. 🎯  
 
----
+## 🛠️ Tech Stack  
+- **Node.js** (for backend logic)  
+- **Jest** (for testing)  
+- **Docker** (for containerization)  
+- **GitHub Actions** (for CI/CD)  
+- **Jenkins** (for CI/CD Automation)  
 
-## 🛠️ Tech Stack
-
-- **Node.js** (for backend logic)
-- **Jest** (for testing)
-- **Docker** (for containerization)
-- **GitHub Actions** (for CI/CD)
-  
----
-
-## 🚀 Features
-
-- **Automatic Testing**: After every push to the `main` branch, tests will be run to verify the integrity of your application. 🧪✅
-- **Docker Build & Push**: Every successful test run triggers the creation and deployment of a Docker image to Docker Hub. 🐳
-- **CI/CD Pipeline**: Using GitHub Actions to automate testing and deployment processes. ⚙️🤖
+## 🚀 Features  
+✅ **Automatic Testing**: Runs tests after every push to the `main` branch to ensure application integrity. 🧪  
+🐳 **Docker Build & Push**: Successful tests trigger Docker image creation and deployment to **Docker Hub**.  
+⚙️ **CI/CD Pipeline**: **GitHub Actions & Jenkins** automate testing, building, and deployment processes.  
 
 ---
 
-## 💡 GitHub Actions CI/CD Pipeline
+## 💡 CI/CD Pipelines  
 
-This project is set up to use GitHub Actions for Continuous Integration (CI) and Continuous Deployment (CD). Here’s how it works:
+### **GitHub Actions Workflow**  
+The **GitHub Actions** pipeline is set up to trigger on every push to the `main` branch.  
 
-1. **Push to `main` Branch**: When code is pushed to the `main` branch, the pipeline is triggered. The workflow is set to run the tests and then build and push a Docker image to Docker Hub. 🔄
+### **Workflow Structure:**  
+#### **1️⃣ build-test Job**  
+- Sets up the **Node.js** environment.  
+- Installs dependencies (`npm install`).  
+- Runs tests using **Jest**.  
 
-2. **Workflow Structure**: 
-   - **`build-test` Job**: 
-     - Installs dependencies.
-     - Runs tests using Jest. 
-   - **`docker-build-push` Job**: 
-     - Logs into Docker Hub using GitHub secrets.
-     - Builds the Docker image and pushes it to Docker Hub with the `latest` tag and the unique commit SHA tag.
-     - Logs out from Docker Hub after the build is complete. 🚪
+#### **2️⃣ docker-build-push Job**  
+- Logs into **Docker Hub** using **GitHub Secrets**.  
+- Builds the Docker image and pushes it to **Docker Hub**.  
+- Logs out from Docker Hub after deployment. 🚀  
+
+### **Jenkins Pipeline**  
+A **Jenkinsfile** is included for CI/CD automation using **Jenkins**.  
+
+#### **Jenkins Pipeline Stages:**  
+1. **Checkout Code**: Pulls the latest changes from the repository.  
+2. **Set up Node.js**: Installs Node.js and dependencies.  
+3. **Run Tests**: Executes Jest tests.  
+4. **Build Docker Image**: Builds the Docker container.  
+5. **Push to Docker Hub**: Logs into **Docker Hub** and uploads the image.  
+6. **Deployment (Optional)**: Can be extended for automated deployment.  
 
 ---
 
-## 🖼️ Screenshot on Test Failure
-
-If a test fails in the pipeline, 
-
+## 🖼️ Screenshot on Test Failure  
 ![Image](https://github.com/user-attachments/assets/3cde33b3-f3d9-432f-a9f0-513c88d3f894)
+---
+
+## 🧑‍💻 GitHub Secrets Configuration  
+To securely log in to Docker Hub, set up the following secrets in **GitHub Secrets**:  
+
+- **DOCKERHUB_USERNAME**: Your Docker Hub username.  
+- **DOCKERHUB_TOKEN**: Your Docker Hub Personal Access Token (PAT).  
+
+🔒 These secrets are securely injected into GitHub Actions for authentication during the build process.  
 
 ---
 
-## 🧑‍💻 GitHub Secrets Configuration
+## 🐳 Docker Hub Integration  
+Once the **Docker image** is successfully built, it is tagged and pushed to **Docker Hub** with:  
 
-To securely log in to Docker Hub and push the Docker image, the following secrets need to be set in your GitHub repository:
+- `latest`: The most recent version of the app.  
+- `${{ github.sha }}`: A unique identifier for each commit.  
 
-### Steps to set up DockerHub credentials in GitHub Secrets:
-
-1. Navigate to your GitHub repository.
-2. Go to **Settings** > **Secrets** > **New repository secret**.
-3. Add the following secrets:
-    - **`DOCKERHUB_USERNAME`**: Your Docker Hub username.
-    - **`DOCKERHUB_TOKEN`**: Your Docker Hub Personal Access Token (PAT).
-
-🔒 These secrets are securely injected into the GitHub Actions pipeline for authentication during the build process.
+Find your Docker image on **Docker Hub**:  
+👉 **[martinjohny/calculator-webapp](https://hub.docker.com/r/martinjohny/calculator-webapp)**  
 
 ---
 
-## 🐳 Docker Hub Integration
-
-Once the Docker image is successfully built, it is tagged and pushed to Docker Hub with the following tags:
-
-- `latest`: The most recent version of the application.
-- `${{ github.sha }}`: A unique identifier for each commit.
-
-You can find your Docker image on Docker Hub by navigating to:
-https://hub.docker.com/r/martinjohny/calculator-webapp
-
----
-
-## ⚙️ Workflow Explanation
-
-### **CI/CD Pipeline:**
-
-#### 1. **build-test Job** 🧪
-
-- **Set up Node.js**: The pipeline starts by setting up the Node.js environment.
-- **Install Dependencies**: `npm install` installs the required dependencies.
-- **Run Tests**: Jest runs the tests to ensure everything works fine.
-
-#### 2. **docker-build-push Job** 🚀
-
-- **Docker Hub Login**: Authenticates with Docker Hub using the secrets.
-- **Build & Push Docker Image**: The Docker image is built using the current code and pushed to Docker Hub.
-- **Logout**: Finally, logs out from Docker Hub for security purposes.
-
----
+## ⚙️ CI/CD Pipeline Summary  
+1. **GitHub Actions** automates testing and Docker image creation.  
+2. **Jenkins** provides an additional automation pipeline for more flexibility.  
+3. **Docker Hub** stores the containerized app for deployment.  
 
